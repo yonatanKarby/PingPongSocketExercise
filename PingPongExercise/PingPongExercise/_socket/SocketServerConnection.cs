@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-namespace PingPongExercise
+namespace PingPongExercise._socket
 {
     public class SocketServerConnection
     {

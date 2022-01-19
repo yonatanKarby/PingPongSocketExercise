@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
 
-namespace PingPongExercise
+namespace PingPongExercise._socket
 {
     public class ServerSocket : TcpServerBase
     {
