@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PingPongExercise
 {
-    public class Server
+    public class ServerTcpListner : ITcpServer
     {
         private readonly int _port;
         private readonly IPAddress _ip;
@@ -15,18 +14,18 @@ namespace PingPongExercise
 
         private bool IsRunning = true;
         
-        public Server(IPAddress ip, int port)
+        public ServerTcpListner(IPAddress ip, int port)
         {
             _port = port;
             _ip = ip;
             _listner = new TcpListener(_ip, _port);
         }
 
-        public async void Listen()
+        public async Task Listen()
         {
             await Task.Run(() =>
             {
-                while (true)
+                while (IsRunning)
                 {
                     _listner.Start();
                     var client = _listner.AcceptTcpClient();
