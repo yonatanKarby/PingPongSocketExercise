@@ -14,10 +14,13 @@ namespace Client
         private readonly IPEndPoint _endpoint;
         private NetworkStream _stream;
         private bool _isRunning = true;
-        public ClientTcp(IPAddress ip, int port)
+        public ClientTcp()
         {
-            _port = port;
-            _ip = ip;
+            Console.WriteLine("What is the ip you want to connect to?");
+            _ip = System.Net.IPAddress.Parse(Console.ReadLine());
+            Console.WriteLine("What is the port?");
+            _port = int.Parse(Console.ReadLine());
+            
             _endpoint = new IPEndPoint(_ip, _port);
             _client = new TcpClient();
         }
@@ -40,7 +43,9 @@ namespace Client
         {
             try
             {
+                Console.WriteLine("Sending...");
                 _stream.Write(buffer);
+                Console.WriteLine("Sent!");
             }
             catch(System.IO.IOException ex)
             {

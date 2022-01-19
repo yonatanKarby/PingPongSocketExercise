@@ -15,10 +15,13 @@ namespace Client
 
         private bool _isRunning = true;
 
-        public ClientSocket(IPAddress ip, int port)
+        public ClientSocket()
         {
-            _ip = ip;
-            _port = port;
+            Console.WriteLine("What is the ip you want to connect to?");
+            _ip = System.Net.IPAddress.Parse(Console.ReadLine());
+            Console.WriteLine("What is the port?");
+            _port = int.Parse(Console.ReadLine());
+
             _endpoint = new IPEndPoint(_ip, _port);
             _socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
         }
