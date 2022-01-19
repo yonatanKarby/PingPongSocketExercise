@@ -25,7 +25,9 @@ namespace Client
         {
             await Task.Run(() =>
             {
+                Console.WriteLine("Connecting...");
                 _client.Connect(_endpoint);
+                Console.WriteLine("*** Connected ***");
                 _stream = _client.GetStream();
                 while (_isRunning)
                 {
@@ -52,6 +54,7 @@ namespace Client
         }
         private byte[] GetIncodedMessege()
         {
+            Console.Write("Enter text: ");
             var messege = Console.ReadLine();
             return Encoding.ASCII.GetBytes(messege);
         }
