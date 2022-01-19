@@ -51,7 +51,7 @@ namespace PingPongExercise._tcp
         private void write(byte[] buffer)
         {
             var messege = Encoding.ASCII.GetString(buffer);
-            _output.Write(messege);
+            _output.Write($"{_client} -> {messege}");
         }
     }
 }
