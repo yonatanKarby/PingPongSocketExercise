@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PingPongExercise
 {
-    public class ServerSocket
+    public class ServerSocket : ITcpServer
     {
         private readonly int _port;
         private readonly IPAddress _ip;
