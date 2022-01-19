@@ -1,6 +1,7 @@
 ﻿using PingPong.Core;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 namespace PingPongExercise._tcp
 {
@@ -10,37 +11,36 @@ namespace PingPongExercise._tcp
         private readonly IOutput<string> _output;
         private readonly string _name;
         private NetworkStream _stream;
-        public TcpServerConnection(TcpClient client, string name)
+        public TcpServerConnection(TcpClient client, string name, IOutput<string> output)
         {
             _client = client;
             _name = name;
+            _output = output;
         }
 
         public void Start()
         {
-            _stream = _client.GetStream();
-            while(true)
+            new Thread(() =>
             {
-                try
+                _stream = _client.GetStream();
+                while (true)
                 {
-                    var buffer = Read();
-                    write(buffer);
+                    try
+                    {
+                        var buffer = Read();
+                        write(buffer);
+                    }
+                    catch (System.IO.IOException ex)
+                    {
+                        _output.Write($"Client {_name} disconnected + {ex.Message}");
+                        return;
+                    }
+                    catch
+                    {
+                        throw;
+                    }
                 }
-                catch(System.IO.IOException ex)
-                {
-                    _output.Write($"Client {_name} disconnected");
-                    return;
-                }
-                catch
-                {
-                    throw;
-                }
-                finally
-                {
-                    _stream.Close();
-                    _client.Close();
-                }
-            }
+            }).Start();
         }
         private byte[] Read()
         {
@@ -51,7 +51,7 @@ namespace PingPongExercise._tcp
         private void write(byte[] buffer)
         {
             var messege = Encoding.ASCII.GetString(buffer);
-            _output.Write($"{_client} -> {messege}");
+            _output.Write($"{_name} -> {messege}");
         }
     }
 }

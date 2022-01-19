@@ -29,7 +29,7 @@ namespace PingPongExercise._socket
                     }
                     catch(SocketException ex)
                     {
-                        _output.Write($"Client {_name} disconnected!");
+                        _output.Write($"Client {_name} disconnected! + {ex.Message}");
                         return;
                     }
                     catch

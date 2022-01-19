@@ -13,7 +13,6 @@ namespace PingPongExercise._socket
         private readonly Socket _socket;
         private readonly IOutput<string> _output;
         private List<SocketServerConnection> _connections;
-        private bool _isRunning = true;
 
         public ServerSocket(IPAddress ip, int port, IOutput<string> output)
         {
@@ -32,7 +31,7 @@ namespace PingPongExercise._socket
             await Task.Run(() =>
             {
                 _socket.Listen(10);
-                while (_isRunning)
+                while (true)
                 {
                     var clientSocket = _socket.Accept();
                     _output.Write("New Connection!");
