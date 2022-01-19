@@ -1,5 +1,4 @@
 ﻿using PingPong.Core;
-using System;
 
 namespace PingPongExercise
 {
