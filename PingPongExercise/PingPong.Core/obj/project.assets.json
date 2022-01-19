@@ -1,30 +1,11 @@
 {
   "version": 3,
   "targets": {
-    ".NETCoreApp,Version=v3.1": {
-      "PingPong.Core/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "compile": {
-          "bin/placeholder/PingPong.Core.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/PingPong.Core.dll": {}
-        }
-      }
-    }
+    ".NETCoreApp,Version=v3.1": {}
   },
-  "libraries": {
-    "PingPong.Core/1.0.0": {
-      "type": "project",
-      "path": "../PingPong.Core/PingPong.Core.csproj",
-      "msbuildProject": "../PingPong.Core/PingPong.Core.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    ".NETCoreApp,Version=v3.1": [
-      "PingPong.Core >= 1.0.0"
-    ]
+    ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
     "C:\\Users\\joker\\.nuget\\packages\\": {},
@@ -33,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\MamasCode\\PingPong\\PingPongExercise\\PingPongExercise\\PingPongExercise.csproj",
-      "projectName": "PingPongExercise",
-      "projectPath": "C:\\MamasCode\\PingPong\\PingPongExercise\\PingPongExercise\\PingPongExercise.csproj",
+      "projectUniqueName": "C:\\MamasCode\\PingPong\\PingPongExercise\\PingPong.Core\\PingPong.Core.csproj",
+      "projectName": "PingPong.Core",
+      "projectPath": "C:\\MamasCode\\PingPong\\PingPongExercise\\PingPong.Core\\PingPong.Core.csproj",
       "packagesPath": "C:\\Users\\joker\\.nuget\\packages\\",
-      "outputPath": "C:\\MamasCode\\PingPong\\PingPongExercise\\PingPongExercise\\obj\\",
+      "outputPath": "C:\\MamasCode\\PingPong\\PingPongExercise\\PingPong.Core\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -57,11 +38,7 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
-          "projectReferences": {
-            "C:\\MamasCode\\PingPong\\PingPongExercise\\PingPong.Core\\PingPong.Core.csproj": {
-              "projectPath": "C:\\MamasCode\\PingPong\\PingPongExercise\\PingPong.Core\\PingPong.Core.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

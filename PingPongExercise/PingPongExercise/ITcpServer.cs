@@ -4,6 +4,6 @@ namespace PingPongExercise
 {
     public interface ITcpServer
     {
-        Task Listen();
+        Task ListenToNewUsers();
     }
 }

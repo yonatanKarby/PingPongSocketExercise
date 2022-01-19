@@ -1,45 +1,42 @@
-﻿using System;
+﻿using PingPong.Core;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PingPongExercise
 {
-    public class ServerSocket : ITcpServer
+    public class ServerSocket : TcpServerBase
     {
         private readonly int _port;
         private readonly IPAddress _ip;
         private readonly Socket _socket;
-
+        private readonly IOutput<string> _output;
+        private List<SocketServerConnection> _connections;
         private bool _isRunning = true;
 
-        public ServerSocket(IPAddress ip, int port)
+        public ServerSocket(IPAddress ip, int port, IOutput<string> output)
         {
             _port = port;
             _ip = ip;
+            _output = output;
+            _connections = new List<SocketServerConnection>();
             var endpoint = new IPEndPoint(_ip, _port);
             _socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
             _socket.Bind(endpoint);
         }
 
-        public async Task Listen()
+        public override async Task ListenToNewUsers()
         {
-            _socket.Listen(10);
             await Task.Run(() =>
             {
-                Console.WriteLine("*** Waiting for connection... ***");
-                var clientSocket = _socket.Accept();
-                Console.WriteLine("*** Connected! ***");
-                byte[] buffer = new byte[1024];
-
-                while(_isRunning)
+                while (_isRunning)
                 {
-                    int numofBytes = clientSocket.Receive(buffer);
-
-                    var messege = Encoding.ASCII.GetString(buffer);
-                    Console.WriteLine("*** New Message ***");
-                    Console.WriteLine(messege);
+                    var clientSocket = _socket.Accept();
+                    _output.Write("New Connection!");
+                    var connection = new SocketServerConnection(clientSocket, _output);
+                    connection.Start();
+                    _connections.Add(connection);
                 }
             });
         }

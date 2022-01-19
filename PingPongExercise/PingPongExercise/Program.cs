@@ -6,7 +6,8 @@ namespace PingPongExercise
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var ip = new System.Net.IPAddress(new byte[] { 127, 0, 0, 1 });
+            var port = 50000;
         }
     }
 }

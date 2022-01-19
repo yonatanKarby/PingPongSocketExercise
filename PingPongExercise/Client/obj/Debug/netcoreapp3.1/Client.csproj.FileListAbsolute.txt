@@ -4,7 +4,6 @@ C:\MamasCode\PingPong\PingPongExercise\Client\bin\Debug\netcoreapp3.1\Client.run
 C:\MamasCode\PingPong\PingPongExercise\Client\bin\Debug\netcoreapp3.1\Client.runtimeconfig.dev.json
 C:\MamasCode\PingPong\PingPongExercise\Client\bin\Debug\netcoreapp3.1\Client.dll
 C:\MamasCode\PingPong\PingPongExercise\Client\bin\Debug\netcoreapp3.1\Client.pdb
-C:\MamasCode\PingPong\PingPongExercise\Client\obj\Debug\netcoreapp3.1\Client.csproj.AssemblyReference.cache
 C:\MamasCode\PingPong\PingPongExercise\Client\obj\Debug\netcoreapp3.1\Client.GeneratedMSBuildEditorConfig.editorconfig
 C:\MamasCode\PingPong\PingPongExercise\Client\obj\Debug\netcoreapp3.1\Client.AssemblyInfoInputs.cache
 C:\MamasCode\PingPong\PingPongExercise\Client\obj\Debug\netcoreapp3.1\Client.AssemblyInfo.cs
