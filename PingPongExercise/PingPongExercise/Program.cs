@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PingPong.Core;
+using System;
 
 namespace PingPongExercise
 {
@@ -8,6 +9,8 @@ namespace PingPongExercise
         {
             var ip = new System.Net.IPAddress(new byte[] { 127, 0, 0, 1 });
             var port = 50000;
+            var server = new ServerSocket(ip, port, new ConsoleOutput());
+            server.ListenToNewUsers().GetAwaiter().GetResult();
         }
     }
 }

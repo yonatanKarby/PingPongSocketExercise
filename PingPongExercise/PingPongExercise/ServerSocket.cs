@@ -28,13 +28,15 @@ namespace PingPongExercise
 
         public override async Task ListenToNewUsers()
         {
+            _output.Write("server online");
             await Task.Run(() =>
             {
+                _socket.Listen(10);
                 while (_isRunning)
                 {
                     var clientSocket = _socket.Accept();
                     _output.Write("New Connection!");
-                    var connection = new SocketServerConnection(clientSocket, _output);
+                    var connection = new SocketServerConnection(clientSocket, $"{_connections.Count}",_output);
                     connection.Start();
                     _connections.Add(connection);
                 }

@@ -8,11 +8,13 @@ namespace PingPongExercise
     public class SocketServerConnection
     {
         private readonly Socket _client;
+        private readonly string _name;
         private readonly IOutput<string> _output;
-        public SocketServerConnection(Socket client, IOutput<string> output)
+        public SocketServerConnection(Socket client, string name,IOutput<string> output)
         {
             _client = client;
             _output = output;
+            _name = name;
         }
 
         public void Start()
@@ -25,8 +27,9 @@ namespace PingPongExercise
                     {
                         ListedToClient();
                     }
-                    catch(System.IO.IOException)
+                    catch(SocketException ex)
                     {
+                        _output.Write($"Client {_name} disconnected!");
                         return;
                     }
                     catch
@@ -42,7 +45,7 @@ namespace PingPongExercise
             var buffer = new byte[_client.ReceiveBufferSize];
             int length = _client.Receive(buffer);
             var messege = Encoding.ASCII.GetString(buffer);
-            _output.Write(messege);
+            _output.Write($"{_name} -> {messege}");
         }
     }
 }

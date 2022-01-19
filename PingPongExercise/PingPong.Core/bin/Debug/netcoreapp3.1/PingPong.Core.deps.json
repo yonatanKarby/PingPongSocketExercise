@@ -6,14 +6,6 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "PingPongExercise/1.0.0": {
-        "dependencies": {
-          "PingPong.Core": "1.0.0"
-        },
-        "runtime": {
-          "PingPongExercise.dll": {}
-        }
-      },
       "PingPong.Core/1.0.0": {
         "runtime": {
           "PingPong.Core.dll": {}
@@ -22,11 +14,6 @@
     }
   },
   "libraries": {
-    "PingPongExercise/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
     "PingPong.Core/1.0.0": {
       "type": "project",
       "serviceable": false,
