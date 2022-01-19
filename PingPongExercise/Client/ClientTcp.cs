@@ -36,7 +36,19 @@ namespace Client
         }
         private void Send(byte[] buffer)
         {
-            _stream.Write(buffer);
+            try
+            {
+                _stream.Write(buffer);
+            }
+            catch(System.IO.IOException ex)
+            {
+                Console.WriteLine($"Server not online {ex.Message}");
+                _isRunning = false;
+            }
+            catch
+            {
+                throw;
+            }
         }
         private byte[] GetIncodedMessege()
         {

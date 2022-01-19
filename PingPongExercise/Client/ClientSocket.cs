@@ -35,9 +35,25 @@ namespace Client
                     Console.WriteLine("Enter text:");
                     var messege = Console.ReadLine();
                     var buffer = Encoding.ASCII.GetBytes(messege);
-                    _socket.Send(buffer);
+                    Send(buffer);
                 }
             });
+        }
+        private void Send(byte[] buffer)
+        {
+            try
+            {
+                _socket.Send(buffer);
+            }
+            catch(SocketException ex)
+            {
+                Console.WriteLine($"Server not online {ex.Message}");
+                _isRunning = false;
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }
