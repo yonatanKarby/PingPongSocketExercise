@@ -7,7 +7,7 @@
 
         public override string ToString()
         {
-            return $"age {age} name {name}";
+            return $"{name} {age}";
         }
     }
 }

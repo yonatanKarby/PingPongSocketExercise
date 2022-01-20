@@ -16,14 +16,17 @@ namespace Client
         private readonly IPEndPoint _endpoint;
         private NetworkStream _stream;
         private bool _isRunning = true;
-        private Person _person;
+        private Person _person = new Person();
         public ClientTcp()
         {
             Console.WriteLine("What is the ip you want to connect to?");
             _ip = IPAddress.Parse(Console.ReadLine());
             Console.WriteLine("What is the port?");
             _port = int.Parse(Console.ReadLine());
-            
+            Console.WriteLine("Name");
+            _person.name = Console.ReadLine();
+            Console.WriteLine("Age:");
+            _person.age = int.Parse(Console.ReadLine());
             _endpoint = new IPEndPoint(_ip, _port);
             _client = new TcpClient();
         }
@@ -32,7 +35,6 @@ namespace Client
             await Task.Run(() =>
             {
                 Connect();
-                _stream = _client.GetStream();
                 while (_isRunning)
                 {
                     SendMessage();
@@ -44,6 +46,7 @@ namespace Client
         {
             Console.WriteLine("Connecting...");
             _client.Connect(_endpoint);
+            _stream = _client.GetStream();
             var personJson = JsonConvert.SerializeObject(_person);
             Send(Encoding.ASCII.GetBytes(personJson));
             Console.WriteLine("*** Connected ***");

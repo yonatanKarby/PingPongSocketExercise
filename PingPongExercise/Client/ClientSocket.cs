@@ -14,7 +14,7 @@ namespace Client
         private readonly int _port;
         private readonly IPEndPoint _endpoint;
         private readonly Socket _socket;
-        private Person _person;
+        private Person _person = new Person();
         private bool _isRunning = true;
 
         public ClientSocket()
@@ -23,7 +23,10 @@ namespace Client
             _ip = IPAddress.Parse(Console.ReadLine());
             Console.WriteLine("What is the port?");
             _port = int.Parse(Console.ReadLine());
-
+            Console.WriteLine("Name");
+            _person.name = Console.ReadLine();
+            Console.WriteLine("Age:");
+            _person.age = int.Parse(Console.ReadLine());
             _endpoint = new IPEndPoint(_ip, _port);
             _socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
         }
