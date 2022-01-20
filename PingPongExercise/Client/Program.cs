@@ -6,7 +6,7 @@ namespace Client
     {
         static void Main(string[] args)
         {
-            var client = new ClientTcp();
+            var client = new ClientSocket();
             client.BeginWrite().GetAwaiter().GetResult();
         }
     }

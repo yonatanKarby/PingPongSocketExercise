@@ -14,8 +14,8 @@ namespace PingPongExercise
             }
             else
             {
-                var port = int.Parse(args[0]);
-                var ip = System.Net.IPAddress.Parse(args[1]);
+                int.TryParse(args[0], out int port);
+                var ip = System.Net.IPAddress.Parse("127.0.0.1");
                 var server = new ServerTcp(ip, port, new ConsoleOutput());
                 server.ListenToNewUsers().GetAwaiter().GetResult();
             }
