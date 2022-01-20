@@ -1,4 +1,5 @@
-﻿using PingPong.Core;
+﻿using Newtonsoft.Json;
+using PingPong.Core;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -10,11 +11,11 @@ namespace PingPongExercise._socket
         private readonly Socket _client;
         private readonly string _name;
         private readonly IOutput<string> _output;
-        public SocketServerConnection(Socket client, string name,IOutput<string> output)
+        private Person _person;
+        public SocketServerConnection(Socket client,IOutput<string> output)
         {
             _client = client;
             _output = output;
-            _name = name;
         }
 
         public void Start()
@@ -25,11 +26,12 @@ namespace PingPongExercise._socket
                 {
                     try
                     {
-                        ListedToClient();
+                        var buffer = ListedToClient();
+                        SendClient(buffer);
                     }
                     catch(SocketException ex)
                     {
-                        _output.Write($"Client {_name} disconnected! + {ex.Message}");
+                        _output.Write($"Client {_person.ToString()} disconnected! + {ex.Message}");
                         return;
                     }
                     catch
@@ -40,12 +42,25 @@ namespace PingPongExercise._socket
             }).Start();
         }
 
-        private void ListedToClient()
+        private void GetPerson()
+        {
+            var buffer = new byte[1024];
+            _client.Receive(buffer);
+            var json = Encoding.ASCII.GetString(buffer);
+            _person = JsonConvert.DeserializeObject<Person>(json);
+        }
+
+        private byte[] ListedToClient()
         {
             var buffer = new byte[_client.ReceiveBufferSize];
             int length = _client.Receive(buffer);
             var messege = Encoding.ASCII.GetString(buffer);
-            _output.Write($"{_name} -> {messege}");
+            _output.Write($"{_person.ToString()} -> {messege}");
+            return buffer;
+        }
+        private void SendClient(byte[] buffer)
+        {
+            _client.Send(buffer);
         }
     }
 }

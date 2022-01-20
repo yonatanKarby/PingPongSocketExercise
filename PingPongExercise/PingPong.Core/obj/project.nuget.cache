@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "4cdbRVx4KAU6/EhhxpNmDRIEzvSZGmN93idbcyPCx6Fu3QV0TX1it0GWDvRVUcdj3nVCLi0EMY88LFTWqJpmlQ==",
+  "dgSpecHash": "Rs4B9sLxTmTSCqpF7jBWT5cQmxWBso1W1VP3WhztrUBzYiC4YCCdeXLOMjt1g+lLvCLlVmpgraeTQ8Q17tDYRw==",
   "success": true,
   "projectFilePath": "C:\\MamasCode\\PingPong\\PingPongExercise\\PingPong.Core\\PingPong.Core.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\joker\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

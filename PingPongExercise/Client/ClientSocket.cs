@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using PingPong.Core;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -12,13 +14,13 @@ namespace Client
         private readonly int _port;
         private readonly IPEndPoint _endpoint;
         private readonly Socket _socket;
-
+        private Person _person;
         private bool _isRunning = true;
 
         public ClientSocket()
         {
             Console.WriteLine("What is the ip you want to connect to?");
-            _ip = System.Net.IPAddress.Parse(Console.ReadLine());
+            _ip = IPAddress.Parse(Console.ReadLine());
             Console.WriteLine("What is the port?");
             _port = int.Parse(Console.ReadLine());
 
@@ -29,18 +31,44 @@ namespace Client
         {
             await Task.Run(() =>
             {
-                Console.WriteLine("Connecting...");
-                _socket.Connect(_endpoint);
-                Console.WriteLine("Connected");
-
+                Connect();
                 while (_isRunning)
                 {
-                    Console.WriteLine("Enter text:");
-                    var messege = Console.ReadLine();
-                    var buffer = Encoding.ASCII.GetBytes(messege);
-                    Send(buffer);
+                    SendMessage();
+                    ReceiveMessage();                    
                 }
             });
+        }
+
+        private void Connect()
+        {
+            Console.WriteLine("Connecting...");
+            _socket.Connect(_endpoint);
+            var personJson = JsonConvert.SerializeObject(_person);
+            Send(Encoding.ASCII.GetBytes(personJson));
+            Console.WriteLine("Connected");
+        }
+
+        private void SendMessage()
+        {
+            Console.WriteLine("Enter text:");
+            var messege = Console.ReadLine();
+            var buffer = Encoding.ASCII.GetBytes(messege);
+            Send(buffer);
+        }
+
+        private void ReceiveMessage()
+        {
+            var receiveBuffer = Listen();
+            var message = Encoding.ASCII.GetString(receiveBuffer);
+            Console.WriteLine(message);
+        }
+
+        private byte[] Listen()
+        {
+            byte[] buffer = new byte[1024];
+            _socket.Receive(buffer);
+            return buffer;
         }
         private void Send(byte[] buffer)
         {

@@ -35,7 +35,7 @@ namespace PingPongExercise._socket
                 {
                     var clientSocket = _socket.Accept();
                     _output.Write("New Connection!");
-                    var connection = new SocketServerConnection(clientSocket, $"{_connections.Count}",_output);
+                    var connection = new SocketServerConnection(clientSocket,_output);
                     connection.Start();
                     _connections.Add(connection);
                 }

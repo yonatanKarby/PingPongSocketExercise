@@ -1,6 +1,9 @@
-﻿using PingPong.Core;
+﻿using Newtonsoft.Json;
+using PingPong.Core;
+using System;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading;
 
 namespace PingPongExercise._tcp
@@ -9,12 +12,11 @@ namespace PingPongExercise._tcp
     {
         private readonly TcpClient _client;
         private readonly IOutput<string> _output;
-        private readonly string _name;
+        private Person _person;
         private NetworkStream _stream;
-        public TcpServerConnection(TcpClient client, string name, IOutput<string> output)
+        public TcpServerConnection(TcpClient client, IOutput<string> output)
         {
             _client = client;
-            _name = name;
             _output = output;
         }
 
@@ -23,16 +25,17 @@ namespace PingPongExercise._tcp
             new Thread(() =>
             {
                 _stream = _client.GetStream();
+                GetPerson();
                 while (true)
                 {
                     try
                     {
-                        var buffer = Read();
-                        write(buffer);
+                        var buffer = ListenToClient();
+                        SendClient(buffer);
                     }
                     catch (System.IO.IOException ex)
                     {
-                        _output.Write($"Client {_name} disconnected + {ex.Message}");
+                        _output.Write($"Client {_person.ToString()} disconnected + {ex.Message}");
                         return;
                     }
                     catch
@@ -41,6 +44,24 @@ namespace PingPongExercise._tcp
                     }
                 }
             }).Start();
+        }
+        private void GetPerson()
+        {
+            var buffer = new byte[1024];
+            _stream.Read(buffer);
+            var json = Encoding.ASCII.GetString(buffer);
+            _person = JsonConvert.DeserializeObject<Person>(json);
+        }
+        private void SendClient(byte[] buffer)
+        {
+            Console.WriteLine("*** Sending back ***");
+            _stream.Write(buffer);
+        }
+        private byte[] ListenToClient()
+        {
+            var buffer = Read();
+            write(buffer);
+            return buffer;
         }
         private byte[] Read()
         {
@@ -51,7 +72,7 @@ namespace PingPongExercise._tcp
         private void write(byte[] buffer)
         {
             var messege = Encoding.ASCII.GetString(buffer);
-            _output.Write($"{_name} -> {messege}");
+            _output.Write($"{_person.ToString()} -> {messege}");
         }
     }
 }

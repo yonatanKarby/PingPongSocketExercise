@@ -11,4 +11,3 @@ C:\MamasCode\PingPong\PingPongExercise\Client\obj\Debug\netcoreapp3.1\Client.csp
 C:\MamasCode\PingPong\PingPongExercise\Client\obj\Debug\netcoreapp3.1\Client.dll
 C:\MamasCode\PingPong\PingPongExercise\Client\obj\Debug\netcoreapp3.1\Client.pdb
 C:\MamasCode\PingPong\PingPongExercise\Client\obj\Debug\netcoreapp3.1\Client.genruntimeconfig.cache
-C:\MamasCode\PingPong\PingPongExercise\Client\obj\Debug\netcoreapp3.1\Client.csproj.AssemblyReference.cache

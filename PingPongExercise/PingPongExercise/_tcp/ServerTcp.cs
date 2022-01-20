@@ -31,7 +31,7 @@ namespace PingPongExercise._tcp
                 {
                     var client = _listner.AcceptTcpClient();
                     _output.Write("New Connection!");
-                    var connection = new TcpServerConnection(client, $"{_connections.Count}", _output);
+                    var connection = new TcpServerConnection(client, _output);
                     connection.Start();
                     _connections.Add(connection);
                 }

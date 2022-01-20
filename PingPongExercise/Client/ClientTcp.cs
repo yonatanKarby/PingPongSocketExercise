@@ -1,8 +1,10 @@
-﻿using System;
+﻿using PingPong.Core;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Client
 {
@@ -14,10 +16,11 @@ namespace Client
         private readonly IPEndPoint _endpoint;
         private NetworkStream _stream;
         private bool _isRunning = true;
+        private Person _person;
         public ClientTcp()
         {
             Console.WriteLine("What is the ip you want to connect to?");
-            _ip = System.Net.IPAddress.Parse(Console.ReadLine());
+            _ip = IPAddress.Parse(Console.ReadLine());
             Console.WriteLine("What is the port?");
             _port = int.Parse(Console.ReadLine());
             
@@ -28,24 +31,40 @@ namespace Client
         {
             await Task.Run(() =>
             {
-                Console.WriteLine("Connecting...");
-                _client.Connect(_endpoint);
-                Console.WriteLine("*** Connected ***");
+                Connect();
                 _stream = _client.GetStream();
                 while (_isRunning)
                 {
-                    var buffer = GetIncodedMessege();
-                    Send(buffer);
+                    SendMessage();
+                    ReceiveMessage();
                 }
             });
+        }
+        private void Connect()
+        {
+            Console.WriteLine("Connecting...");
+            _client.Connect(_endpoint);
+            var personJson = JsonConvert.SerializeObject(_person);
+            Send(Encoding.ASCII.GetBytes(personJson));
+            Console.WriteLine("*** Connected ***");
+        }
+        private void ReceiveMessage()
+        {
+            var ReceiveBuffer = new byte[1024];
+            _stream.Read(ReceiveBuffer);
+            var message = Encoding.ASCII.GetString(ReceiveBuffer);
+            Console.WriteLine(message);
+        }
+        private void SendMessage()
+        {
+            var buffer = GetIncodedMessege();
+            Send(buffer);
         }
         private void Send(byte[] buffer)
         {
             try
             {
-                Console.WriteLine("Sending...");
                 _stream.Write(buffer);
-                Console.WriteLine("Sent!");
             }
             catch(System.IO.IOException ex)
             {
